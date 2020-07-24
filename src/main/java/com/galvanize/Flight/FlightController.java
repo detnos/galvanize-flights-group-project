@@ -1,9 +1,9 @@
 package com.galvanize.Flight;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
+@RestController
+@RequestMapping("/flights")
 public class FlightController {
 
     private final FlightRepository repository;
@@ -20,5 +20,17 @@ public class FlightController {
     @PostMapping("")
     public Flight create(@RequestBody Flight flight) {
         return this.repository.save(flight);
+    }
+
+    @DeleteMapping("/{id}")
+    public boolean delete(@PathVariable Long id) {
+
+        try {
+            this.repository.deleteById(id);
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
     }
 }
